@@ -14,7 +14,5 @@ object AuthModule {
 
     @Singleton
     @Provides
-    fun provideAuthRepository(): AuthRepository {
-        return DefaultAuthRepository()
-    }
+    fun provideAuthRepository() = DefaultAuthRepository() as AuthRepository
 }

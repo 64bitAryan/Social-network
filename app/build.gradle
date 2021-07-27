@@ -113,4 +113,8 @@ dependencies {
 
     //Material Dependency
     implementation "com.google.android.material:material:1.5.0-alpha01"
+
+    // Paging 3
+    def paging_version = "3.0.1"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 }

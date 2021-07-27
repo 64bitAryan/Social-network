@@ -27,8 +27,6 @@ abstract class BasePostFragment(
     @Inject
     lateinit var postAdapter: PostAdapter
 
-    protected abstract val postProgressBar: ProgressBar
-
     protected abstract val basePostViewModel: BasePostViewModel
 
     private var curLikedIndex: Int? = null
@@ -71,21 +69,21 @@ abstract class BasePostFragment(
         basePostViewModel.likedPostStatus.observe(viewLifecycleOwner, EventObserver(
             onError = {
                 curLikedIndex?.let { index ->
-                    postAdapter.posts[index].isLiking = false
+                    postAdapter.peek(index)?.isLiking = false
                     postAdapter.notifyItemChanged(index)
                 }
                 snackbar(it)
             },
             onLoading = {
                 curLikedIndex?.let{ index ->
-                    postAdapter.posts[index].isLiking = true
+                    postAdapter.peek(index)?.isLiking = true
                     postAdapter.notifyItemChanged(index)
                 }
             }
         ){ isLiked ->
             curLikedIndex?.let{ index->
                 val uid = FirebaseAuth.getInstance().uid!!
-                postAdapter.posts[index].apply {
+                postAdapter.peek(index)?.apply {
                     this.isLiked = isLiked
                     isLiking = false
                     if(isLiked) {
@@ -103,27 +101,6 @@ abstract class BasePostFragment(
         ){ users ->
             val userAdapter = UserAdapter(glide)
             LikedByDialog(userAdapter).show(childFragmentManager, null)
-        })
-
-        basePostViewModel.deletePostStatus.observe(viewLifecycleOwner, EventObserver(
-            onError = {
-                snackbar(it)
-            }
-        ){ deletedPost ->
-            postAdapter.posts -= deletedPost
-        })
-
-        basePostViewModel.posts.observe(viewLifecycleOwner, EventObserver(
-            onError = {
-                postProgressBar.isVisible = false
-                snackbar(it)
-            },
-            onLoading = {
-                postProgressBar.isVisible = true
-            },
-        ){  posts ->
-            postProgressBar.isVisible = false
-            postAdapter.posts = posts
         })
     }
 }

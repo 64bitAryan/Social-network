@@ -65,6 +65,7 @@ class AuthViewModel @Inject constructor(
         } else null
 
         //PostValue to liveData about the Error
+        //error variable is not equal to null
         error?.let {
             _registerStatus.postValue(Event(Resource.Error(it)))
             return

@@ -3,14 +3,22 @@ package com.ryan.socialnetwork.ui.main.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ryan.data.entities.Post
 import com.ryan.data.entities.User
+import com.ryan.data.pagingsource.ProfilePostPagingSource
 import com.ryan.repositories.MainRepository
+import com.ryan.socialnetwork.other.Constants.PAGE_SIZE
 import com.ryan.socialnetwork.other.Event
 import com.ryan.socialnetwork.other.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,15 +35,15 @@ class ProfileViewModel @Inject constructor(
     val followStatus: LiveData<Event<Resource<Boolean>>> = _followStatus
 
     private val _posts = MutableLiveData<Event<Resource<List<Post>>>>()
-    override val posts: LiveData<Event<Resource<List<Post>>>>
-        get() = _posts
 
-    override fun getPosts(uid: String) {
-        _posts.postValue(Event(Resource.Loading()))
-        viewModelScope.launch(dispatcher) {
-            val result = repository.getPostForProfile(uid)
-            _posts.postValue(Event(result))
-        }
+    fun getPaginfFlow(uid: String): Flow<PagingData<Post>> {
+        val pagingSource = ProfilePostPagingSource(
+            FirebaseFirestore.getInstance(),
+            uid
+        )
+        return Pager(PagingConfig(PAGE_SIZE)) {
+            pagingSource
+        }.flow.cachedIn(viewModelScope)
     }
 
     fun toggleFollowForUser(uid: String) {
@@ -52,7 +60,6 @@ class ProfileViewModel @Inject constructor(
             val result = repository.getUser(uid)
             _profileMeta.postValue(Event(result))
         }
-        getPosts(uid)
     }
 
 }
