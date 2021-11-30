@@ -27,3 +27,8 @@ and helps to share memories.
   3. Used coroutines for background processes
   4. Used Paging3 library for paginatio
   
+## Output  
+![ss1](https://firebasestorage.googleapis.com/v0/b/tinderclone-a1a88.appspot.com/o/Screenshot_2021-11-26-21-56-13-40_c47b94a6c5cca779c41ba0571a751229.jpg?alt=media&token=fa9fa5ba-30eb-4a20-ae55-692ed5bb2b47)  
+![ss2](https://firebasestorage.googleapis.com/v0/b/tinderclone-a1a88.appspot.com/o/Screenshot_2021-11-26-21-56-20-49_c47b94a6c5cca779c41ba0571a751229.jpg?alt=media&token=363fa000-1709-4e0d-a8b7-8782120b70c6)
+![ss3](https://firebasestorage.googleapis.com/v0/b/tinderclone-a1a88.appspot.com/o/Screenshot_2021-11-26-21-56-24-97_c47b94a6c5cca779c41ba0571a751229.jpg?alt=media&token=87124d8a-2400-4f4d-9842-e33661249a18)
+![ss4](https://firebasestorage.googleapis.com/v0/b/tinderclone-a1a88.appspot.com/o/Screenshot_2021-11-26-21-56-52-34_c47b94a6c5cca779c41ba0571a751229.jpg?alt=media&token=6b5653bb-7e6b-44da-9717-30306667f9a0)
